@@ -1,28 +1,31 @@
-<h1>SpaceX Launches</h1>
+<h1 class="title">SpaceX Launches</h1>
 <div class="container">
   <div class="row">
     <div class="col">
       <div class="form-group">
-        <label for="year">Filter by Year:</label>
-        <input type="text" class="form-control" id="year" [(ngModel)]="year">
-        <button class="btn btn-primary" (click)="filterMissions()">Filter</button>
+        <label class="filter-label">Filter by Year:</label>
+        <div class="checkbox-group" *ngFor="let year of years">
+          <label>
+            <input type="checkbox" [(ngModel)]="checkedYears[year]" (change)="filterMissions()"> 
+            {{ year }}
+          </label>
+        </div>
       </div>
     </div>
   </div>
-  <div *ngIf="missions.length === 0">
+  
+  <div class="loading" *ngIf="missions.length === 0">
     <p>Loading missions...</p>
   </div>
-  <div class="row row-cols-1 row-cols-md-5">
+  
+  <div class="mission-grid row row-cols-1 row-cols-md-5">
     <div class="col mb-4" *ngFor="let mission of missions">
-      <mat-card (click)="openMissionDetails(mission)">
-        <img mat-card-image src="{{ mission.links.mission_patch_small }}" alt="Card image cap">
+      <mat-card class="mission-card" (click)="openMissionDetails(mission)">
+        <img class="mission-image" src="{{ mission.links?.mission_patch_small }}" alt="Card image cap">
         <mat-card-header>
           <mat-card-title>{{ mission.mission_name }}</mat-card-title>
           <mat-card-subtitle>{{ mission.launch_year }}</mat-card-subtitle>
         </mat-card-header>
-        <mat-card-content>
-          <p>{{ mission.details }}</p>
-        </mat-card-content>
       </mat-card>
     </div>
   </div>

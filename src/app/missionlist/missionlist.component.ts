@@ -2,6 +2,8 @@ import { Component, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { MissiondetailsComponent } from '../missiondetails/missiondetails.component';
+import { SpacexapiService } from '../network/spacexapi.service';
+import { Mission } from '../model/mission';
 
 
 @Component({
@@ -12,24 +14,35 @@ import { MissiondetailsComponent } from '../missiondetails/missiondetails.compon
 export class MissionlistComponent {
   @Output() missionSelected = new EventEmitter<any>();
   selectedMission: any = null;
-  missions: any[] = [];
-  year: string = '';
+  missions: Mission[] = [];
+  years: string[] = [];
+  checkedYears: {[key: string]: boolean} = {};
+  
 
-  constructor(private http: HttpClient, public dialog: MatDialog) { }
+  constructor(private spacexService: SpacexapiService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.getMissions();
+    this.getMissionYears();
   }
+  
+  getMissionYears(): void {
+    this.spacexService.getMissions().subscribe((data: Mission[]) => {
+      const years = new Set<string>();
+      data.forEach(mission => years.add(mission.launch_year));
+      this.years = Array.from(years).sort().reverse();
+      this.years.forEach(year => this.checkedYears[year] = false);
+    });
+  }
+  
 
   getMissions(): void {
-    let url = 'https://api.spacexdata.com/v3/launches';
-    if (this.year) {
-      url += '?launch_year=' + this.year;
-    }
-    this.http.get(url).subscribe((data: any) => {
+    const selectedYears = Object.keys(this.checkedYears).filter(year => this.checkedYears[year]);
+    this.spacexService.getMissions(selectedYears).subscribe((data: Mission[]) => {
       this.missions = data;
     });
   }
+  
 
   filterMissions(): void {
     this.getMissions();
