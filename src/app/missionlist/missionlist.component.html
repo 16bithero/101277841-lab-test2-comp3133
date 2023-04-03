@@ -5,16 +5,16 @@
 <div class="container">
   <div class="row row-cols-1 row-cols-md-5">
     <div class="col mb-4" *ngFor="let mission of missions">
-      <div class="card" style="max-width: 18rem;">
-        <img class="card-img-top" src="{{ mission.links.mission_patch_small }}" alt="Card image cap">
-        <div class="card-header d-flex justify-content-between">
-          <span>{{ mission.mission_name }}</span>
-          <span class="ml-auto">{{ mission.launch_year }}</span>
-        </div>
-        <div class="card-body">
-          <p class="card-text">{{ mission.details }}</p>
-        </div>
-      </div>
+      <mat-card>
+        <img mat-card-image src="{{ mission.links.mission_patch_small }}" alt="Card image cap">
+        <mat-card-header>
+          <mat-card-title>{{ mission.mission_name }}</mat-card-title>
+          <mat-card-subtitle>{{ mission.launch_year }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p>{{ mission.details }}</p>
+        </mat-card-content>
+      </mat-card>
     </div>
   </div>
 </div>
