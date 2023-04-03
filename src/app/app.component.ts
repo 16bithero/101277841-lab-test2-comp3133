@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = '101277841-lab-test2-comp3133';
+  selectedMission: any = null;
+
+  handleMissionSelected(mission: any): void {
+    this.selectedMission = mission;
+  }
 }

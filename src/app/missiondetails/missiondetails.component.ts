@@ -1,4 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+
 
 @Component({
   selector: 'app-missiondetails',
@@ -6,7 +8,9 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./missiondetails.component.css']
 })
 export class MissiondetailsComponent {
-  @Input() mission: any;
+  constructor(
+    public dialogRef: MatDialogRef<MissiondetailsComponent>,
+    @Inject(MAT_DIALOG_DATA) public mission: any
 
-  constructor() { }
+  ) { }
 }

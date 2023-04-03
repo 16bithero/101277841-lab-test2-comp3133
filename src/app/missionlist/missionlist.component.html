@@ -14,7 +14,7 @@
   </div>
   <div class="row row-cols-1 row-cols-md-5">
     <div class="col mb-4" *ngFor="let mission of missions">
-      <mat-card>
+      <mat-card (click)="openMissionDetails(mission)">
         <img mat-card-image src="{{ mission.links.mission_patch_small }}" alt="Card image cap">
         <mat-card-header>
           <mat-card-title>{{ mission.mission_name }}</mat-card-title>

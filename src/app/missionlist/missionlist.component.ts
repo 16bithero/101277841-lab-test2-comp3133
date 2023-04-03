@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { MatDialog } from '@angular/material/dialog';
+import { MissiondetailsComponent } from '../missiondetails/missiondetails.component';
 
 
 @Component({
@@ -8,10 +10,12 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./missionlist.component.css']
 })
 export class MissionlistComponent {
+  @Output() missionSelected = new EventEmitter<any>();
+  selectedMission: any = null;
   missions: any[] = [];
   year: string = '';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.getMissions();
@@ -31,5 +35,15 @@ export class MissionlistComponent {
     this.getMissions();
   }
 
+  selectMission(mission: any): void {
+    this.missionSelected.emit(mission);
+  }
+  
+  openMissionDetails(mission: any): void {
+    this.dialog.open(MissiondetailsComponent, {
+      data: mission,
+      width: '800px',
+    });
+  }
   
 }
