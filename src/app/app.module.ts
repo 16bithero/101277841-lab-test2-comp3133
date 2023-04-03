@@ -7,18 +7,22 @@ import { MissionlistComponent } from './missionlist/missionlist.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
+import { FormsModule } from '@angular/forms';
+import { MissiondetailsComponent } from './missiondetails/missiondetails.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MissionlistComponent
+    MissionlistComponent,
+    MissiondetailsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MatCardModule
+    MatCardModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

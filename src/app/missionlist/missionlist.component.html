@@ -1,8 +1,17 @@
 <h1>SpaceX Launches</h1>
-<div *ngIf="missions.length === 0">
-  <p>Loading missions...</p>
-</div>
 <div class="container">
+  <div class="row">
+    <div class="col">
+      <div class="form-group">
+        <label for="year">Filter by Year:</label>
+        <input type="text" class="form-control" id="year" [(ngModel)]="year">
+        <button class="btn btn-primary" (click)="filterMissions()">Filter</button>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="missions.length === 0">
+    <p>Loading missions...</p>
+  </div>
   <div class="row row-cols-1 row-cols-md-5">
     <div class="col mb-4" *ngFor="let mission of missions">
       <mat-card>

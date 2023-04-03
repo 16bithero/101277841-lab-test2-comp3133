@@ -9,6 +9,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class MissionlistComponent {
   missions: any[] = [];
+  year: string = '';
 
   constructor(private http: HttpClient) { }
 
@@ -17,9 +18,18 @@ export class MissionlistComponent {
   }
 
   getMissions(): void {
-    this.http.get('https://api.spacexdata.com/v3/launches').subscribe((data: any) => {
+    let url = 'https://api.spacexdata.com/v3/launches';
+    if (this.year) {
+      url += '?launch_year=' + this.year;
+    }
+    this.http.get(url).subscribe((data: any) => {
       this.missions = data;
-      console.log(this.missions);
     });
   }
+
+  filterMissions(): void {
+    this.getMissions();
+  }
+
+  
 }
