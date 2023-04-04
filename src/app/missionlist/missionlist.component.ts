@@ -60,11 +60,17 @@ export class MissionlistComponent {
   }
   
   openMissionDetails(mission: any): void {
-    this.dialog.open(MissiondetailsComponent, {
+    const isMobile = window.innerWidth < 768;
+  
+    const dialogRef = this.dialog.open(MissiondetailsComponent, {
       data: mission,
-      width: "50vw",
-      height: '50vh'
+      width: isMobile ? "90vw" : "50vw",
+      height: isMobile ? "75vh" : "50vh",
+      maxWidth: "100vw",
+      maxHeight: "100vh",
+      panelClass: "full-screen-dialog"
     });
   }
+  
   
 }
