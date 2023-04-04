@@ -1,16 +1,16 @@
-<h1 class="title">SpaceX Launches</h1>
+
+
 <div class="container">
   <div class="row">
     <div class="col">
       <div class="form-group">
-        <label class="filter-label">Filter by Year:</label>
-        <div class="checkbox-group" *ngFor="let year of years">
-          <label>
-            <input type="checkbox" [(ngModel)]="checkedYears[year]" (change)="filterMissions()"> 
-            {{ year }}
-          </label>
-        </div>
+        <label class="filter-label" for="year-select">Filter by Year:</label>
+        <select class="form-control" id="year-select" [(ngModel)]="selectedYear" (change)="filterMissions()">
+          <option value="">All Years</option>
+          <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+        </select>
       </div>
+      
     </div>
   </div>
   
@@ -21,11 +21,28 @@
   <div class="mission-grid row row-cols-1 row-cols-md-5">
     <div class="col mb-4" *ngFor="let mission of missions">
       <mat-card class="mission-card" (click)="openMissionDetails(mission)">
-        <img class="mission-image" src="{{ mission.links?.mission_patch_small }}" alt="Card image cap">
-        <mat-card-header>
-          <mat-card-title>{{ mission.mission_name }}</mat-card-title>
-          <mat-card-subtitle>{{ mission.launch_year }}</mat-card-subtitle>
+        <img class="mission-image" src="{{ mission.links?.mission_patch_small }}" alt="Mission image">
+        <mat-card-header style="display: flex; justify-content: space-between;">
+          <div class="card-title" style="flex: 1 1 auto">{{ mission.mission_name }}</div>
+          <div class="card-title" style="text-align: right">{{ mission.launch_year }}</div>
         </mat-card-header>
+        <mat-card-content>
+          <p class="card-text"><strong style="color: #273468"> Number: </strong>{{ mission.flight_number }}</p>
+          <p class="card-text"><strong style="color: #273468">Launch Success:</strong>
+            <span *ngIf="mission.launch_success; else failure">
+             ✅
+            </span>
+            <ng-template #failure>
+           ❌
+            </ng-template>
+          </p>
+          
+          <p class="card-text"><strong style="color: #273468">Nationality:</strong> {{ mission.rocket.second_stage.payloads[0].nationality }}</p>
+        </mat-card-content>
+        
+        
+        
+        
       </mat-card>
     </div>
   </div>

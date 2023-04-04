@@ -1,5 +1,17 @@
-<div *ngIf="mission">
-  <h2>{{ mission.mission_name }} ({{ mission.launch_year }})</h2>
-  <p>{{ mission.details }}</p>
-  <!-- Add more details about the mission as needed -->
+<div class="mission-container" *ngIf="mission">
+  <div class="mission-image-container">
+    <img class="mission-image" src="{{ mission.links?.mission_patch_small }}" alt="Mission image">
+  </div>
+  <div class="mission-details-container">
+    <h2 style="color: #273468;"class="mission-name">{{ mission.mission_name }} ({{ mission.launch_year }})</h2>
+    <hr>
+    <div class="mission-label">Flight Number: {{ mission.flight_number }}</div>
+    <p>
+    <div class="mission-label">Launch Success: {{ mission.launch_success ? '✅' : '❌' }}</div>
+    <p>
+    <div class="mission-label">Nationality: {{ mission.rocket.second_stage.payloads[0].nationality }}</div>
+    <p>
+    <div class="mission-label">Mission Details:</div>
+    <p class="mission-details-text">{{ mission.details }}</p>
+  </div>
 </div>

@@ -17,6 +17,7 @@ export class MissionlistComponent {
   missions: Mission[] = [];
   years: string[] = [];
   checkedYears: {[key: string]: boolean} = {};
+  selectedYear: string = '';
   
 
   constructor(private spacexService: SpacexapiService, public dialog: MatDialog) { }
@@ -37,11 +38,17 @@ export class MissionlistComponent {
   
 
   getMissions(): void {
-    const selectedYears = Object.keys(this.checkedYears).filter(year => this.checkedYears[year]);
-    this.spacexService.getMissions(selectedYears).subscribe((data: Mission[]) => {
-      this.missions = data;
+    this.spacexService.getMissions().subscribe((data: Mission[]) => {
+      let filteredMissions = data;
+  
+      if (this.selectedYear) {
+        filteredMissions = data.filter(mission => mission.launch_year === this.selectedYear);
+      }
+  
+      this.missions = filteredMissions;
     });
   }
+  
   
 
   filterMissions(): void {
@@ -55,7 +62,8 @@ export class MissionlistComponent {
   openMissionDetails(mission: any): void {
     this.dialog.open(MissiondetailsComponent, {
       data: mission,
-      width: '800px',
+      width: "50vw",
+      height: '50vh'
     });
   }
   
